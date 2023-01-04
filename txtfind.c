@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+
 
 #define LINE 256
 #define WORD 30
@@ -150,7 +152,12 @@ void print_similar_words(char * str)
         memset(word , '\0' , WORD);
         getWord(word);
         printf("the word is: %s\n" , word);
-        if(similar(str , word , 1) == 1)
+        int sim = 1;
+        if(strlen(word) == strlen(str))
+        {
+            sim = 0;
+        }
+        if(similar(word , str , sim) == 1)
         {
             printf("%s is similar the word %s\n" ,word , str);
         }
@@ -158,13 +165,39 @@ void print_similar_words(char * str)
         {
             printf("%s is #not# similar the word %s\n" ,word , str);
         }
+        i++;
     }
 }
 
 int main()
 {
-    char *str = "cat";
-    print_similar_words(str);
+    // char sim[WORD];
+    // printf("enter the word\n");
+    // getWord(sim);
+    // char str[2];
+    // printf("enter the a or b\n");
+    // fgets(str, 2, stdin); 
+    // char c;
+    // for (int i = 0; i < strlen(str); i++) {
+    //     if (!isspace(str[i])) {
+    //     c = str[i];
+    //     break;
+    //     }
+    // }
+    // printf("char is: %c\n" , c);
+    // if(c == 'a')
+    // {
+    //     printf("a\n");
+    // }
+    // else if(c == 'b')
+    // {
+    //     printf("b\n");
+    // }
+
+    char sim[WORD];
+    printf("enter the word\n");
+    getWord(sim);
+    print_similar_words(sim);
     // char *str2 = "ccsatt aaa";
     // printf("return is: %d\n" , substring(str , str2));
     return 0;
