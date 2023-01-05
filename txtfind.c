@@ -90,7 +90,7 @@ int getWord(char *w)
 
 void print_lines(char * str) 
 {
-    char line[LINE];
+    char line[LINE] = {'\0'};
     for(int i = 0; i < LINE; i++)
     {
         memset(line , '\0' , LINE);
@@ -107,7 +107,7 @@ void print_lines(char * str)
 
 void print_similar_words(char * str)
 {
-    char word[WORD];
+    char word[WORD] = {'\0'};
     for(int i = 0; i<LINE; i++)
     {
         memset(word , '\0' , WORD);
@@ -129,23 +129,20 @@ void print_similar_words(char * str)
 
 int main()
 {
-    char word[WORD];
+    char word[WORD] = {'\0'};
     getWord(word);
     char ch = '0';
     ch = getchar();
+    char *c = NULL;
     if(ch == 'a')
     {
-        char *c = NULL;
         scanf("%s" , c);
         print_lines(word);
     }
     else if(ch == 'b')
     {
-        char *c = NULL;
         scanf("%s" , c);
         print_similar_words(word);
     }
-
-    
     return 0;
 }
