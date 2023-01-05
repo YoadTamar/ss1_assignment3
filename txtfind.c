@@ -7,7 +7,7 @@
 #define WORD 30
 
 /**
- * check if str1 is substring of str2
+ * check if str1 is a substring of str2
 */
 int substring( char * str1, char * str2)
 {
@@ -15,44 +15,6 @@ int substring( char * str1, char * str2)
         return 1;
     }
     return 0;
-
-    // int len1 = strlen(str1);
-    // int len2 = strlen(str2);
-
-    // if(len1 > len2 ) //check it they have the same length
-    // {
-    //     return 0;
-    // }
-
-    // char *ps1 = str1;// make a copy
-    // char *ps2 = str2;
-    // int count = 0; //check if the word s include all the the letters from t 
-    // for (size_t i = 0; i < len2; i++)
-    // {
-    //     if(*ps1 == *ps2)
-    //     {
-    //         while(count < len1 && i <len2)
-    //         {
-    //             if(*ps1 != *ps2){
-    //                 ps1 = str1;
-    //                 break;
-    //             }
-    //             else
-    //             {
-    //                 i++;
-    //                 count++;
-    //                 ps1++;
-    //                 ps2++;
-    //             }
-    //         }
-    //         if(count == len1){
-    //             return 1;
-    //         }
-    //     }
-    //     ps2++;
-    //
-
-    //return 0;
 }
 
 /**
@@ -96,12 +58,11 @@ int similar (char *s, char *t, int n)
 
 int getLine(char *s)
 {
-    printf("start read\n");
     int count = 0;
     char *c = s;
     char ch = '0'; 
     ch = getchar();
-    while (ch != '\n' && count < LINE)
+    while (ch != '\n' && count < LINE && ch != EOF)
     {
         c = strncat(c , &ch , 1);
         ch = getchar();
@@ -117,7 +78,7 @@ int getWord(char *w)
     char *c = w;
     char ch = '0'; 
     ch = getchar();
-    while (ch != '\n' && ch != '\t' && ch != ' '  && count < LINE)
+    while (ch != '\n' && ch != '\t' && ch != ' ' && count < WORD  && ch != EOF)
     {
         c = strncat(c , &ch , 1);
         ch = getchar();
@@ -130,28 +91,30 @@ int getWord(char *w)
 void print_lines(char * str) 
 {
     char line[LINE];
-    printf("call line\n");
-    getLine(line);
-    printf("the line is: %s\n" , line);
-    if(substring(str , line) == 1)
+    for(int i = 0; i < LINE; i++)
     {
-        printf("%s is it the line\n" , str);
-    }
-    else{
-        printf("%s is #not# it the line\n" , str);
+        memset(line , '\0' , LINE);
+        if(getLine(line) == 0)
+        {
+            break;
+        }
+        if(substring(str , line) == 1)
+        {
+            printf("%s\n", line);
+        }
     }
 }
 
 void print_similar_words(char * str)
 {
     char word[WORD];
-    printf("call word\n");
-    int i = 0;
-    while(i < 10)
+    for(int i = 0; i<LINE; i++)
     {
         memset(word , '\0' , WORD);
-        getWord(word);
-        printf("the word is: %s\n" , word);
+        if(getWord(word) == 0)
+        {
+            break;
+        }
         int sim = 1;
         if(strlen(word) == strlen(str))
         {
@@ -159,46 +122,30 @@ void print_similar_words(char * str)
         }
         if(similar(word , str , sim) == 1)
         {
-            printf("%s is similar the word %s\n" ,word , str);
+            printf("%s\n" ,word);
         }
-        else
-        {
-            printf("%s is #not# similar the word %s\n" ,word , str);
-        }
-        i++;
     }
 }
 
 int main()
 {
-    // char sim[WORD];
-    // printf("enter the word\n");
-    // getWord(sim);
-    // char str[2];
-    // printf("enter the a or b\n");
-    // fgets(str, 2, stdin); 
-    // char c;
-    // for (int i = 0; i < strlen(str); i++) {
-    //     if (!isspace(str[i])) {
-    //     c = str[i];
-    //     break;
-    //     }
-    // }
-    // printf("char is: %c\n" , c);
-    // if(c == 'a')
-    // {
-    //     printf("a\n");
-    // }
-    // else if(c == 'b')
-    // {
-    //     printf("b\n");
-    // }
+    char word[WORD];
+    getWord(word);
+    char ch = '0';
+    ch = getchar();
+    if(ch == 'a')
+    {
+        char *c = NULL;
+        scanf("%s" , c);
+        print_lines(word);
+    }
+    else if(ch == 'b')
+    {
+        char *c = NULL;
+        scanf("%s" , c);
+        print_similar_words(word);
+    }
 
-    char sim[WORD];
-    printf("enter the word\n");
-    getWord(sim);
-    print_similar_words(sim);
-    // char *str2 = "ccsatt aaa";
-    // printf("return is: %d\n" , substring(str , str2));
+    
     return 0;
 }
